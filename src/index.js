@@ -1,3 +1,2 @@
-export view from './view'
-export store from './store'
-export { batch } from './scheduler'
+export view from "./view";
+export store from "./store";

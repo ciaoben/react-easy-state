@@ -1,5 +1,8 @@
 # React Easy State
 
+🚨 This is the fork used at <a href="https://qboxmail.com">Qboxmail</a>.
+The original library is not maintained anymore but we love the idea so we forked it. We only used on the web so we remove native stuff that is useless to us.
+
 Simple React state management. Made with :heart: and ES6 Proxies.
 
 [![Build](https://img.shields.io/circleci/project/github/solkimicreb/react-easy-state/master.svg)](https://circleci.com/gh/solkimicreb/react-easy-state/tree/master) [![dependencies Status](https://david-dm.org/solkimicreb/react-easy-state/status.svg)](https://david-dm.org/solkimicreb/react-easy-state) [![Coverage Status](https://coveralls.io/repos/github/solkimicreb/react-easy-state/badge.svg?branch=master&service=github)](https://coveralls.io/github/solkimicreb/react-easy-state?branch=master) [![Package size](https://img.shields.io/bundlephobia/minzip/react-easy-state.svg)](https://bundlephobia.com/result?p=react-easy-state) [![Version](https://img.shields.io/npm/v/react-easy-state.svg)](https://www.npmjs.com/package/react-easy-state) [![License](https://img.shields.io/npm/l/react-easy-state.svg)](https://www.npmjs.com/package/react-easy-state) [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Simple%20React%20state%20management.%20Made%20with%20%E2%9D%A4%EF%B8%8F%20and%20ES6%20Proxies.&url=https://github.com/solkimicreb/react-easy-state&hashtags=reactjs,webdev,javascript)
@@ -39,13 +42,13 @@ React Easy State is a practical state management library with two functions and 
 2.  Always wrap your state store objects with `store()`.
 
 ```jsx
-import React from 'react'
-import { store, view } from 'react-easy-state'
+import React from "react";
+import { store, view } from "react-easy-state";
 
-const counter = store({ num: 0 })
-const increment = () => counter.num++
+const counter = store({ num: 0 });
+const increment = () => counter.num++;
 
-export default view(() => <button onClick={increment}>{counter.num}</button>)
+export default view(() => <button onClick={increment}>{counter.num}</button>);
 ```
 
 This is enough for it to automatically update your views when needed. It doesn't matter how you structure or mutate your state stores, any syntactically valid code works.
@@ -80,11 +83,11 @@ _You need npm 5.2+ to use npx._
 `store` creates a state store from the passed object and returns it. A state store behaves just like the passed object. (To be precise, it is a transparent reactive proxy of the original object.)
 
 ```js
-import { store } from 'react-easy-state'
+import { store } from "react-easy-state";
 
-const user = store({ name: 'Rick' })
+const user = store({ name: "Rick" });
 // stores behave like normal JS objects
-user.name = 'Bob'
+user.name = "Bob";
 ```
 
 <details>
@@ -92,27 +95,27 @@ user.name = 'Bob'
 <p></p>
 
 ```js
-import { store } from 'react-easy-state'
+import { store } from "react-easy-state";
 
 // stores can include any valid JS structure
 // including nested data, arrays, Maps, Sets, getters, setters, inheritance, ...
 const user = store({
   profile: {
-    firstName: 'Bob',
-    lastName: 'Smith',
+    firstName: "Bob",
+    lastName: "Smith",
     get name() {
-      return `${user.firstName} ${user.lastName}`
+      return `${user.firstName} ${user.lastName}`;
     }
   },
-  hobbies: ['programming', 'sports'],
+  hobbies: ["programming", "sports"],
   friends: new Map()
-})
+});
 
 // stores may be mutated in any syntactically valid way
-user.profile.firstName = 'Bob'
-delete user.profile.lastName
-user.hobbies.push('reading')
-user.friends.set('id', otherUser)
+user.profile.firstName = "Bob";
+delete user.profile.lastName;
+user.hobbies.push("reading");
+user.friends.set("id", otherUser);
 ```
 
 </details>
@@ -123,16 +126,16 @@ user.friends.set('id', otherUser)
 <p></p>
 
 ```js
-import { store } from 'react-easy-state'
+import { store } from "react-easy-state";
 
 const userStore = store({
   user: {},
   async fetchUser() {
-    userStore.user = await fetch('/user')
+    userStore.user = await fetch("/user");
   }
-})
+});
 
-export default userStore
+export default userStore;
 ```
 
 </details>
@@ -145,32 +148,32 @@ export default userStore
 _userStore.js_
 
 ```js
-import { store } from 'react-easy-state'
+import { store } from "react-easy-state";
 
 const userStore = store({
   user: {},
   async fetchUser() {
-    userStore.user = await fetch('/user')
+    userStore.user = await fetch("/user");
   }
-})
+});
 
-export default userStore
+export default userStore;
 ```
 
 _recipesStore.js_
 
 ```js
-import { store } from 'react-easy-state'
-import userStore from './userStore'
+import { store } from "react-easy-state";
+import userStore from "./userStore";
 
 const recipesStore = store({
   recipes: [],
   async fetchRecipes() {
-    recipesStore.recipes = await fetch(`/recipes?user=${userStore.user.id}`)
+    recipesStore.recipes = await fetch(`/recipes?user=${userStore.user.id}`);
   }
-})
+});
 
-export default recipesStore
+export default recipesStore;
 ```
 
 </details>
@@ -182,18 +185,18 @@ export default recipesStore
 
 ```js
 // DON'T DO THIS
-const person = { name: 'Bob' }
-person.name = 'Ann'
+const person = { name: "Bob" };
+person.name = "Ann";
 
-export default store(person)
+export default store(person);
 ```
 
 ```js
 // DO THIS INSTEAD
-const person = store({ name: 'Bob' })
-person.name = 'Ann'
+const person = store({ name: "Bob" });
+person.name = "Ann";
 
-export default person
+export default person;
 ```
 
 The first example wouldn't trigger re-renders on the `person.name = 'Ann'` mutation, because it is targeted at the raw object. Mutating the raw - none `store`-wrapped object - won't schedule renders.
@@ -206,19 +209,19 @@ The first example wouldn't trigger re-renders on the `person.name = 'Ann'` mutat
 <p></p>
 
 ```jsx
-import { store, view } from 'react-easy-state'
+import { store, view } from "react-easy-state";
 
 const counter = store({
   num: 0,
   increment() {
     // DON'T DO THIS
-    this.num++
+    this.num++;
     // DO THIS INSTEAD
-    counter.num++
+    counter.num++;
   }
-})
+});
 
-export default view(() => <div onClick={counter.increment}>{counter.num}</div>)
+export default view(() => <div onClick={counter.increment}>{counter.num}</div>);
 ```
 
 `this.num++` won't work, because `increment` is passed as a callback and loses its `this`. You should use the direct object reference - `counter` - instead of `this`.
@@ -230,11 +233,11 @@ export default view(() => <div onClick={counter.increment}>{counter.num}</div>)
 Wrapping your components with `view` turns them into reactive views. A reactive view re-renders whenever a piece of store - used inside its render - changes.
 
 ```jsx
-import React from 'react'
-import { view, store } from 'react-easy-state'
+import React from "react";
+import { view, store } from "react-easy-state";
 
 // this is a global state store
-const user = store({ name: 'Bob' })
+const user = store({ name: "Bob" });
 
 // this is re-rendered whenever user.name changes
 export default view(() => (
@@ -242,7 +245,7 @@ export default view(() => (
     <input value={user.name} onChange={ev => (user.name = ev.target.value)} />
     <div>Hello {user.name}!</div>
   </div>
-))
+));
 ```
 
 <details>
@@ -250,25 +253,25 @@ export default view(() => (
 <p></p>
 
 ```jsx
-import { view, store } from 'react-easy-state'
+import { view, store } from "react-easy-state";
 
 const appStore = store({
-  user: { name: 'Ann' }
-})
+  user: { name: "Ann" }
+});
 
 const App = view(() => (
   <div>
     <h1>My App</h1>
     <Profile user={appStore.user} />
   </div>
-))
+));
 
 // DO THIS
-const Profile = view(({ user }) => <p>Name: {user.name}</p>)
+const Profile = view(({ user }) => <p>Name: {user.name}</p>);
 
 // DON'T DO THIS
 // This won't re-render on appStore.user.name = 'newName' like mutations
-const Profile = ({ user }) => <p>Name: {user.name}</p>
+const Profile = ({ user }) => <p>Name: {user.name}</p>;
 ```
 
 </details>
@@ -279,11 +282,11 @@ const Profile = ({ user }) => <p>Name: {user.name}</p>
 <p></p>
 
 ```jsx
-import React from 'react'
-import { view, store } from 'react-easy-state'
+import React from "react";
+import { view, store } from "react-easy-state";
 
-const user = store({ name: 'Bob' })
-const timeline = store({ posts: ['react-easy-state'] })
+const user = store({ name: "Bob" });
+const timeline = store({ posts: ["react-easy-state"] });
 
 // this is re-rendered whenever user.name or timeline.posts[0] changes
 export default view(() => (
@@ -291,7 +294,7 @@ export default view(() => (
     <div>Hello {user.name}!</div>
     <div>Your first post is: {timeline.posts[0]}</div>
   </div>
-))
+));
 ```
 
 </details>
@@ -313,14 +316,14 @@ export default view(() => (
 <p></p>
 
 ```jsx
-import React from 'react'
-import { view, store, batch } from 'react-easy-state'
+import React from "react";
+import { view, store, batch } from "react-easy-state";
 
-const user = store({ name: 'Bob', age: 30 })
+const user = store({ name: "Bob", age: 30 });
 
 function mutateUser() {
-  user.name = 'Ann'
-  user.age = 32
+  user.name = "Ann";
+  user.age = 32;
 }
 
 // calling `mutateUser` will only trigger a single re-render of the below component
@@ -329,31 +332,31 @@ export default view(() => (
   <div onClick={mutateUser}>
     name: {user.name}, age: {user.age}
   </div>
-))
+));
 ```
 
 If you mutate your stores multiple times synchronously from **exotic task sources**, multiple renders may rarely happen. If you experience performance issues you can batch changes manually with the `batch` function. `batch(fn)` executes the passed function immediately and batches any subsequent re-renders until the function execution finishes.
 
 ```jsx
-import React from 'react'
-import { view, store, batch } from 'react-easy-state'
+import React from "react";
+import { view, store, batch } from "react-easy-state";
 
-const user = store({ name: 'Bob', age: 30 })
+const user = store({ name: "Bob", age: 30 });
 
 function mutateUser() {
   // this makes sure the state changes will cause maximum one re-render,
   // no matter where this function is getting invoked from
   batch(() => {
-    user.name = 'Ann'
-    user.age = 32
-  })
+    user.name = "Ann";
+    user.age = 32;
+  });
 }
 
 export default view(() => (
   <div>
     name: {user.name}, age: {user.age}
   </div>
-))
+));
 ```
 
 > **NOTE:** The React team plans to improve render batching in the future. The `batch` function and built-in batching may be deprecated and removed in the future in favor of React's own batching.
@@ -366,19 +369,19 @@ export default view(() => (
 <p></p>
 
 ```jsx
-import { view } from 'react-easy-state'
-import { withRouter } from 'react-router-dom'
-import { withTheme } from 'styled-components'
+import { view } from "react-easy-state";
+import { withRouter } from "react-router-dom";
+import { withTheme } from "styled-components";
 
-const Comp = () => <div>A reactive component</div>
+const Comp = () => <div>A reactive component</div>;
 
 // DO THIS
-withRouter(view(Comp))
-withTheme(view(Comp))
+withRouter(view(Comp));
+withTheme(view(Comp));
 
 // DON'T DO THIS
-view(withRouter(Comp))
-view(withTheme(Comp))
+view(withRouter(Comp));
+view(withTheme(Comp));
 ```
 
 </details>
@@ -404,21 +407,21 @@ This is not necessary if you use React Router 4.4+. You can find more details an
 Third party helpers - like data grids - may consist of many internal components which can not be wrapped by `view`, but sometimes you would like them to re-render when the passed data mutates. Traditional React components re-render when their props change by reference, so mutating the passed reactive data won't work in these cases. You can solve this issue by deep cloning the observable data before passing it to the component. This creates a new reference for the consuming component on every store mutation.
 
 ```jsx
-import React from 'react'
-import { view, store } from 'react-easy-state'
-import Table from 'rc-table'
-import cloneDeep from 'lodash/cloneDeep'
+import React from "react";
+import { view, store } from "react-easy-state";
+import Table from "rc-table";
+import cloneDeep from "lodash/cloneDeep";
 
 const dataStore = store({
   items: [
     {
-      product: 'Car',
+      product: "Car",
       value: 12
     }
   ]
-})
+});
 
-export default view(() => <Table data={cloneDeep(dataStore.items)} />)
+export default view(() => <Table data={cloneDeep(dataStore.items)} />);
 ```
 
 </details>
@@ -447,19 +450,19 @@ export default view(() => {
 <p></p>
 
 ```jsx
-import React from 'react'
-import { view, store } from 'react-easy-state'
+import React from "react";
+import { view, store } from "react-easy-state";
 
 export default view(() => {
-  const [name, setName] = useState('Ann')
-  const user = store({ age: 30 })
+  const [name, setName] = useState("Ann");
+  const user = store({ age: 30 });
   return (
     <div>
       <input value={name} onChange={ev => setName(ev.target.value)} />
       <input value={user.age} onChange={ev => (user.age = ev.target.value)} />
     </div>
-  )
-})
+  );
+});
 ```
 
 </details>
@@ -467,19 +470,19 @@ export default view(() => {
 #### Local stores in class components
 
 ```jsx
-import React, { Component } from 'react'
-import { view, store } from 'react-easy-state'
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 
 class Counter extends Component {
-  counter = store({ num: 0 })
-  increment = () => counter.num++
+  counter = store({ num: 0 });
+  increment = () => counter.num++;
 
   render() {
-    return <button onClick={this.increment}>{this.counter.num}</button>
+    return <button onClick={this.increment}>{this.counter.num}</button>;
   }
 }
 
-export default view(Counter)
+export default view(Counter);
 ```
 
 <details>
@@ -487,15 +490,15 @@ export default view(Counter)
 <p></p>
 
 ```jsx
-import React, { Component } from 'react'
-import { view, store } from 'react-easy-state'
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 
 class Profile extends Component {
-  state = { name: 'Ann' }
-  user = store({ age: 30 })
+  state = { name: "Ann" };
+  user = store({ age: 30 });
 
-  setName = ev => this.setState({ name: ev.target.value })
-  setAge = ev => (this.user.age = ev.target.value)
+  setName = ev => this.setState({ name: ev.target.value });
+  setAge = ev => (this.user.age = ev.target.value);
 
   render() {
     return (
@@ -503,11 +506,11 @@ class Profile extends Component {
         <input value={this.state.name} onChange={this.setName} />
         <input value={this.user.age} onChange={this.setAge} />
       </div>
-    )
+    );
   }
 }
 
-export default view(Profile)
+export default view(Profile);
 ```
 
 </details>
@@ -518,14 +521,14 @@ export default view(Profile)
 <p></p>
 
 ```jsx
-import React, { Component } from 'react'
-import { view, store } from 'react-easy-state'
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 
 class Profile extends Component {
   // DON'T DO THIS
-  state = store({})
+  state = store({});
   // DO THIS
-  user = store({})
+  user = store({});
   render() {}
 }
 ```
@@ -540,22 +543,22 @@ class Profile extends Component {
 Class components wrapped with `view` have an extra static `deriveStoresFromProps` lifecycle method, which works similarly to the vanilla `getDerivedStateFromProps`.
 
 ```jsx
-import React, { Component } from 'react'
-import { view, store } from 'react-easy-state'
+import React, { Component } from "react";
+import { view, store } from "react-easy-state";
 
 class NameCard extends Component {
-  userStore = store({ name: 'Bob' })
+  userStore = store({ name: "Bob" });
 
   static deriveStoresFromProps(props, userStore) {
-    userStore.name = props.name || userStore.name
+    userStore.name = props.name || userStore.name;
   }
 
   render() {
-    return <div>{this.userStore.name}</div>
+    return <div>{this.userStore.name}</div>;
   }
 }
 
-export default view(NameCard)
+export default view(NameCard);
 ```
 
 Instead of returning an object, you should directly mutate the received stores. If you have multiple local stores on a single component, they are all passed as arguments - in their definition order - after the first props argument.
@@ -598,7 +601,6 @@ You can compare Easy State with plain React and other state management libraries
 - Safari: 10 and above
 - Edge: 12 and above
 - Opera: 36 and above
-- React Native: 0.59 and above
 
 _This library is based on non polyfillable ES6 Proxies. Because of this, it will never support IE._
 

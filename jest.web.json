@@ -10,8 +10,7 @@
     "!examples/**/build/**",
     "!examples/**/index.js",
     "!examples/stop-watch/**",
-    "!examples/beer-finder/**",
-    "!examples/native-clock/**"
+    "!examples/beer-finder/**"
   ],
   "coverageDirectory": "coverage"
 }
